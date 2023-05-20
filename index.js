@@ -35,6 +35,12 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/toyswithlimit' , async(req , res) => {
+      const toys = toysCollection.find().limit(20);
+      const result = await toys.toArray();
+      res.send(result);
+    })
+
     app.get('/toysbycategory/:category' , async(req , res) => {
       const toys = toysCollection.find({category: req.params.category});
       const result = await toys.toArray();
@@ -55,8 +61,15 @@ async function run() {
       res.send(result);
     })
 
-    app.get('/toysbyemail/:email' , async(req , res) => {
-      const toys = toysCollection.find({sellerEmail: req.params.email});
+    app.get('/toysbyemail/:email/:sort' , async(req , res) => {
+      let toys 
+      if(req.params.sort === "1"){
+         toys = toysCollection.find({sellerEmail: req.params.email}).sort({price: 1});
+      }
+      else{
+         toys = toysCollection.find({sellerEmail: req.params.email});
+      }
+      
       const result = await toys.toArray();
       res.send(result);
     })
