@@ -48,6 +48,11 @@ async function run() {
       res.send(result);
     })
 
+    app.post('/addtoy' , async(req , res) => {
+      const newToy  = req.body;
+      console.log(newToy)
+    })
+
 
 
     // Send a ping to confirm a successful connection
